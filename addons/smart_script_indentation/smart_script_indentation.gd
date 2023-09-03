@@ -51,10 +51,11 @@ func _init() -> void:
 	action_timer = Timer.new() as Timer
 	action_timer.one_shot = true
 	add_child(action_timer)
+	action_timer.timeout.connect(_on_action_timer_timeout)
 
 
 func _enter_tree() -> void:
-	action_timer.timeout.connect(_on_action_timer_timeout)
+	pass
 
 
 func _process(delta: float) -> void:
@@ -80,35 +81,61 @@ func _process(delta: float) -> void:
 	set_process(false)
 
 
+
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.is_pressed() and event.keycode == KEY_ENTER and Input.is_key_pressed(KEY_SHIFT):
+			var caret_line: int = script_code.get_caret_line()
 			if find_next_func:
-				var caret_position: int = script_code.get_caret_line()
-				for next_line in range(1, 4):
-					var line_func = script_code.get_line(caret_position + next_line).begins_with("func")
-					var line_static_func = script_code.get_line(caret_position + next_line).begins_with("static func")
+				for next_line in range(0, 4):
+					var line_func = script_code.get_line(caret_line + next_line).begins_with("func")
+					var line_static_func = script_code.get_line(caret_line + next_line).begins_with("static func")
 					if line_func or line_static_func:
+						if next_line == 0:
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.set_caret_line(caret_line + 2)
 						if next_line == 1:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.set_caret_line(caret_line + 2)
 						elif next_line == 2:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.set_caret_line(caret_line + 2)
 						elif next_line == 3:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.insert_line_at(caret_line + 1, "")
+							script_code.set_caret_line(caret_line + 2)
 			else:
-				script_code.set_line(script_code.get_caret_line(), "")
+				var caret_position = script_code.get_caret_column()
+				var line_length = script_code.get_line(caret_line).length()
+				if caret_position != line_length:
+					script_code.insert_line_at(caret_line, "")
+					script_code.insert_line_at(caret_line, "")
+					script_code.insert_line_at(caret_line, "")
+					script_code.set_line(caret_line + 2, "")
+					script_code.set_caret_line(caret_line + 2)
+					script_code.insert_line_at(caret_line + 3, "")
+					script_code.insert_line_at(caret_line + 3, "")
+				elif caret_position == line_length:
+					script_code.insert_line_at(caret_line + 1, "")
+					script_code.insert_line_at(caret_line + 1, "")
+					script_code.insert_line_at(caret_line + 1, "")
+					script_code.set_line(caret_line + 3, "")
+					script_code.set_caret_line(caret_line + 3)
+					script_code.insert_line_at(caret_line + 4, "")
+					script_code.insert_line_at(caret_line + 4, "")
 			action_timer.stop()
 			enter_count = 0
-
 
 func _exit_tree() -> void:
 	editor_settings.settings_changed.disconnect(_on_editor_settings_changed)
@@ -147,28 +174,33 @@ func _on_text_changed() -> void:
 		if enter_count == 1:
 			action_timer.start()
 		elif enter_count >= 3:
+			var caret_line: int = script_code.get_caret_line()
 			if find_next_func:
-				var caret_position: int = script_code.get_caret_line()
 				for next_line in range(1, 4):
-					var line_func = script_code.get_line(caret_position + next_line).begins_with("func")
-					var line_static_func = script_code.get_line(caret_position + next_line).begins_with("static func")
+					var line_func = script_code.get_line(caret_line + next_line).begins_with("func")
+					var line_static_func = script_code.get_line(caret_line + next_line).begins_with("static func")
 					if line_func or line_static_func:
 						if next_line == 1:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.set_caret_line(caret_line)
 						elif next_line == 2:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.insert_line_at(caret_line, "")
+							script_code.set_caret_line(caret_line)
 						elif next_line == 3:
-							script_code.insert_line_at(caret_position, "")
-							script_code.insert_line_at(caret_position, "")
-							script_code.set_caret_line(caret_position + 2)
+							script_code.set_line(caret_line, "")
+							script_code.set_caret_line(caret_line)
 			else:
-				script_code.set_line(script_code.get_caret_line(), "")
+				var caret_position = script_code.get_caret_column()
+				var line_length = script_code.get_line(caret_line).length()
+				if caret_position != line_length:
+					script_code.insert_line_at(caret_line, "")
+					script_code.insert_line_at(caret_line + 1, "")
+					script_code.set_caret_line(caret_line - 1)
+					script_code.set_line(caret_line - 1, "")
+				elif caret_position == line_length:
+					script_code.insert_line_at(caret_line + 1, "")
+					script_code.insert_line_at(caret_line + 2, "")
+					script_code.set_line(caret_line, "")
 			action_timer.stop()
 			enter_count = 0
