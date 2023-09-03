@@ -18,6 +18,6 @@ Script which monitors for new lines and determines if certain formatting should 
   You can configure the application (with what's currently supported) by going to Editor > Editor Settings... > Editor Settings > Scripts > Smart Indent and customize the settings
 
 ## What customizations are supported?
-  At this time only Action Timeout and Find Next Func work when customized. 
+  At this time only Action Timeout, Hot Key, Find Next Func work when customized. 
   
   Keep an eye on this list for changes or for this to disappear all together to indicate everything is customizable!
