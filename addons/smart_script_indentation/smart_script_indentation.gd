@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 
-### Objects ###
+### Nodes ###
 
 var editor_interface: EditorInterface
 var editor_settings: EditorSettings
@@ -72,6 +72,7 @@ func _process(delta: float) -> void:
 	editor_settings.add_property_info(find_next_func_threshold_setting)
 	editor_settings.settings_changed.connect(_on_editor_settings_changed)
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
+	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
 	script_editor = editor_interface.get_script_editor()
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
@@ -114,8 +115,8 @@ func _exit_tree() -> void:
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Action Timeout")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Enter Count Threshold")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find_Next_Func")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find_Next_Func_Threshold")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func Threshold")
 	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
 	script_code.text_changed.disconnect(_on_text_changed)
 	action_timer.timeout.disconnect(_on_action_timer_timeout)
@@ -129,7 +130,7 @@ func _on_editor_settings_changed() -> void:
 	action_timer.stop()
 	enter_count = 0
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find_Next_Func")
+	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
 
 
 func _on_editor_script_changed(_script: Script) -> void:
