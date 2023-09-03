@@ -81,9 +81,6 @@ func _process(delta: float) -> void:
 	set_process(false)
 
 
-
-
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.is_pressed() and event.keycode == KEY_ENTER and Input.is_key_pressed(KEY_SHIFT):
@@ -176,11 +173,16 @@ func _on_text_changed() -> void:
 		elif enter_count >= 3:
 			var caret_line: int = script_code.get_caret_line()
 			if find_next_func:
-				for next_line in range(1, 4):
+				for next_line in range(0, 4):
 					var line_func = script_code.get_line(caret_line + next_line).begins_with("func")
 					var line_static_func = script_code.get_line(caret_line + next_line).begins_with("static func")
 					if line_func or line_static_func:
-						if next_line == 1:
+						if next_line == 0:
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.insert_line_at(caret_line, "")
+							script_code.set_caret_line(caret_line)
+						elif next_line == 1:
 							script_code.insert_line_at(caret_line, "")
 							script_code.insert_line_at(caret_line, "")
 							script_code.set_caret_line(caret_line)
