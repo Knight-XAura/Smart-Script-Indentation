@@ -5,6 +5,7 @@ extends EditorPlugin
 ### Objects ###
 
 var editor_interface: EditorInterface
+var editor_settings: EditorSettings
 var script_editor: ScriptEditor
 var script_code: CodeEdit
 var delay_timer: Timer
@@ -27,20 +28,15 @@ func _enter_tree() -> void:
 	delay_timer.timeout.connect(_on_delay_timer_timeout)
 
 
-func _exit_tree() -> void:
-	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
-	script_code.text_changed.disconnect(_on_text_changed)
-	delay_timer.timeout.disconnect(_on_delay_timer_timeout)
-
-
 func _process(delta: float) -> void:
 	editor_interface = get_editor_interface()
+	editor_settings = editor_interface.get_editor_settings()
 	script_editor = editor_interface.get_script_editor()
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
 	script_code.text_changed.connect(_on_text_changed)
 	set_process(false)
-	
+
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -68,15 +64,26 @@ func _input(event: InputEvent) -> void:
 			enter_count = 0
 
 
+func _exit_tree() -> void:
+	editor_settings.settings_changed.disconnect(_on_editor_settings_changed)
+	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
+	script_code.text_changed.disconnect(_on_text_changed)
+	delay_timer.timeout.disconnect(_on_delay_timer_timeout)
+
+
+func _on_delay_timer_timeout() -> void:
+	enter_count = 0
+
+
+func _on_editor_settings_changed() -> void:
+	pass
+
+
 func _on_editor_script_changed(_script: Script) -> void:
 	script_code.text_changed.disconnect(_on_text_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
 	script_code.text_changed.connect(_on_text_changed)
 	delay_timer.stop()
-	enter_count = 0
-
-
-func _on_delay_timer_timeout() -> void:
 	enter_count = 0
 
 
