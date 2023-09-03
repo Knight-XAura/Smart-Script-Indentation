@@ -1,0 +1,5 @@
+Add Editor Settings
+	Add Customizable Threshold
+	Add Customizable Delay
+	Add Enable/Disable Hot Key (Shift + Enter)
+	Add Next line Func add Threshold - 1
