@@ -68,10 +68,6 @@ func _input(event: InputEvent) -> void:
 			enter_count = 0
 
 
-func _on_editor_settings_changed() -> void:
-	pass
-
-
 func _on_editor_script_changed(_script: Script) -> void:
 	script_code.text_changed.disconnect(_on_text_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
