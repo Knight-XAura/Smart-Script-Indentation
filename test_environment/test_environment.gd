@@ -6,10 +6,10 @@ extends Control
 var script_code: CodeEdit
 var action_timer: Timer
 
-@onready var action_tiemout_slider: HSlider = $VBoxContainer/HBoxContainer2/ActionTiemout
-@onready var new_line_count_threshold_spinbox: SpinBox = $VBoxContainer/HBoxContainer/NewLineCountThreshold
-@onready var hot_key_checkbox: CheckBox = $VBoxContainer/HBoxContainer/HotKey
-@onready var find_next_function_checkbox: CheckBox = $VBoxContainer/HBoxContainer/FindNextFunction
+@onready var action_tiemout_slider: HSlider = $VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1/ActionTiemout
+@onready var new_line_count_threshold_spinbox: SpinBox = $VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/NewLineCountThreshold
+@onready var hot_key_checkbox: CheckBox = $VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/HotKey
+@onready var find_next_function_checkbox: CheckBox = $VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/FindNextFunction
 
 
 ### Settings ###
