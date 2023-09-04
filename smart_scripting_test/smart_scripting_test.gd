@@ -14,11 +14,11 @@ var action_timer: Timer
 
 ### Settings ###
 
-@export_range(1, 4, 1) var new_line_count_threshold: int = 3
+@export_range(2, 7, 1) var new_line_count_threshold: int = 3
 @export var hotkey: bool = true
 @export var find_next_function: bool = true
 
-@export_range(0, 3) var action_timeout: float = 1
+@export_range(0.33, 3) var action_timeout: float = 1
 
 
 ### Variables ###
