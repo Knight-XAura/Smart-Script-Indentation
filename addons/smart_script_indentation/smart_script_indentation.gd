@@ -31,15 +31,15 @@ const insert_line_spacing_hotkey_setting = {
 		"hint": PROPERTY_HINT_NONE,
 		"hint_string": "PROPERTY_USAGE_CHECKABLE"
 	}
-const find_next_func_setting = {
-		"name": "Editor Plugins/Scripts/Smart Indent/Find Next Func",
+const find_next_function_setting = {
+		"name": "Editor Plugins/Scripts/Smart Indent/Find Next Function",
 		"type": TYPE_BOOL,
 		"hint": PROPERTY_HINT_NONE,
 		"hint_string": "PROPERTY_USAGE_CHECKABLE"
 	}
 var new_line_count_threshold: int
 var hotkey: bool
-var find_next_func: bool
+var find_next_function: bool
 
 
 ### Variables ###
@@ -65,16 +65,16 @@ func _process(delta: float) -> void:
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout", 1)
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold", 3)
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey", true) # Default: false
-	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func", true)
+	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Find Next Function", true)
 	editor_settings.add_property_info(action_timeout_setting)
 	editor_settings.add_property_info(new_line_count_threshold_setting)
 	editor_settings.add_property_info(insert_line_spacing_hotkey_setting)
-	editor_settings.add_property_info(find_next_func_setting)
+	editor_settings.add_property_info(find_next_function_setting)
 	editor_settings.settings_changed.connect(_on_editor_settings_changed)
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
 	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
+	find_next_function = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Function")
 	script_editor = editor_interface.get_script_editor()
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
@@ -88,7 +88,7 @@ func _input(event: InputEvent) -> void:
 			var caret_line: int = script_code.get_caret_line()
 			for lines_to_match in new_line_count_threshold + 1:
 				for syntax in match_syntax:
-					if find_next_func and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
+					if find_next_function and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
 						if lines_to_match == 0:
 							for line_space in new_line_count_threshold - 1:
 								script_code.insert_line_at(caret_line, "")
@@ -125,7 +125,7 @@ func _exit_tree() -> void:
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Action Timeout")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Function")
 	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
 	script_code.text_changed.disconnect(_on_script_code_text_changed)
 	action_timer.timeout.disconnect(_on_action_timer_timeout)
@@ -140,7 +140,7 @@ func _on_editor_settings_changed() -> void:
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
 	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
+	find_next_function = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Function")
 
 
 func _on_editor_script_changed(_script: Script) -> void:
@@ -159,7 +159,7 @@ func _on_script_code_text_changed() -> void:
 			var caret_line: int = script_code.get_caret_line()
 			for lines_to_match in new_line_count_threshold + 1:
 				for syntax in match_syntax:
-					if find_next_func and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
+					if find_next_function and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
 						if lines_to_match == 0:
 							for line_space in new_line_count_threshold - 1:
 								script_code.insert_line_at(caret_line, "")
