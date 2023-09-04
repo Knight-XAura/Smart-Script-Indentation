@@ -42,7 +42,6 @@ var hotkey: bool
 var find_next_function: bool
 
 
-
 ### Variables ###
 
 var new_line_count: int
