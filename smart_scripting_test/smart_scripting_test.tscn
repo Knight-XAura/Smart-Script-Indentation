@@ -59,7 +59,7 @@ text = "New Line Count Threshold: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NewLineCountThreshold" type="SpinBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="EnterCountThreshold" type="SpinBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 min_value = 2.0
 max_value = 7.0
@@ -68,17 +68,17 @@ value = 3.0
 rounded = true
 update_on_text_changed = true
 
-[node name="HotKey" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="InsertNewFunctionSpacingHotkey" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 button_pressed = true
 text = "Hotkey"
 
-[node name="FindNextFunction" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="FindUpcomingFunction" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 button_pressed = true
 text = "Find Next Function"
 
 [connection signal="drag_ended" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1/ActionTiemout" to="." method="_on_action_tiemout_drag_ended"]
-[connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/NewLineCountThreshold" to="." method="_on_new_line_count_threshold_value_changed"]
-[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/HotKey" to="." method="_on_hot_key_toggled"]
-[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/FindNextFunction" to="." method="_on_find_next_function_toggled"]
+[connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/EnterCountThreshold" to="." method="_on_enter_count_threshold_value_changed"]
+[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/InsertNewFunctionSpacingHotkey" to="." method="_on_insert_new_function_spacing_hotkey_toggled"]
+[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/FindUpcomingFunction" to="." method="_on_find_upcoming_function_toggled"]
