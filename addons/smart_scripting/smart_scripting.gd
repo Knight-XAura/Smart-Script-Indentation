@@ -17,13 +17,13 @@ const action_timeout_setting = {
 		"name": "Editor Plugins/Scripts/Smart Indent/Action Timeout",
 		"type": TYPE_FLOAT,
 		"hint": PROPERTY_HINT_RANGE,
-		"hint_string": "0, 3"
+		"hint_string": "0.33, 5"
 	}
 const new_line_count_threshold_setting = {
 		"name": "Editor Plugins/Scripts/Smart Indent/New Line Count Threshold",
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_RANGE,
-		"hint_string": "1,4,1"
+		"hint_string": "2,7,1"
 	}
 const insert_line_spacing_hotkey_setting = {
 		"name": "Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey",
