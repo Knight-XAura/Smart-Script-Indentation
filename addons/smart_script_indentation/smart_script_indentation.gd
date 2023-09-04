@@ -86,7 +86,7 @@ func _process(delta: float) -> void:
 	script_editor = editor_interface.get_script_editor()
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
-	script_code.text_changed.connect(_on_text_changed)
+	script_code.text_changed.connect(_on_script_code_text_changed)
 	set_process(false)
 
 
@@ -151,25 +151,6 @@ func _input(event: InputEvent) -> void:
 #							script_code.insert_line_at(caret_line + 1, "")
 #							script_code.insert_line_at(caret_line + 1, "")
 #							script_code.set_caret_line(caret_line + 2)
-#					else:
-#						var caret_position = script_code.get_caret_column()
-#						var line_length = script_code.get_line(caret_line).length()
-#						if caret_position != line_length:
-#							script_code.insert_line_at(caret_line, "")
-#							script_code.insert_line_at(caret_line, "")
-#							script_code.insert_line_at(caret_line, "")
-#							script_code.set_line(caret_line + 2, "")
-#							script_code.set_caret_line(caret_line + 2)
-#							script_code.insert_line_at(caret_line + 3, "")
-#							script_code.insert_line_at(caret_line + 3, "")
-#						elif caret_position == line_length:
-#							script_code.insert_line_at(caret_line + 1, "")
-#							script_code.insert_line_at(caret_line + 1, "")
-#							script_code.insert_line_at(caret_line + 1, "")
-#							script_code.set_line(caret_line + 3, "")
-#							script_code.set_caret_line(caret_line + 3)
-#							script_code.insert_line_at(caret_line + 4, "")
-#							script_code.insert_line_at(caret_line + 4, "")
 #					reset_temp_data()
 #					return
 
@@ -181,7 +162,7 @@ func _exit_tree() -> void:
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func Threshold")
 	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
-	script_code.text_changed.disconnect(_on_text_changed)
+	script_code.text_changed.disconnect(_on_script_code_text_changed)
 	action_timer.timeout.disconnect(_on_action_timer_timeout)
 
 
@@ -198,13 +179,13 @@ func _on_editor_settings_changed() -> void:
 
 
 func _on_editor_script_changed(_script: Script) -> void:
-	script_code.text_changed.disconnect(_on_text_changed)
+	script_code.text_changed.disconnect(_on_script_code_text_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
-	script_code.text_changed.connect(_on_text_changed)
+	script_code.text_changed.connect(_on_script_code_text_changed)
 	reset_temp_data()
 
 
-func _on_text_changed() -> void:
+func _on_script_code_text_changed() -> void:
 	if Input.is_key_pressed(KEY_ENTER):
 		enter_count += 1
 		if enter_count == 1:
