@@ -82,11 +82,41 @@ func _process(delta: float) -> void:
 	script_editor = editor_interface.get_script_editor()
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
-	script_code.text_changed.connect(_on_script_code_text_changed)
+	script_code.gui_input.connect(_on_script_code_gui_input)
 	set_process(false)
 
 
-func _input(event: InputEvent) -> void:
+func _exit_tree() -> void: # Clean disconnects may not be needed? Similar to missing timer.queue_free()? RefCounted?
+	editor_settings.settings_changed.disconnect(_on_editor_settings_changed)
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Action Timeout")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Function")
+	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
+	script_code.gui_input.disconnect(_on_script_code_gui_input)
+	action_timer.timeout.disconnect(_on_action_timer_timeout)
+
+
+func _on_action_timer_timeout() -> void:
+	new_line_count = 0
+
+
+func _on_editor_settings_changed() -> void:
+	reset_action_data()
+	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
+	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
+	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
+	find_next_function = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Function")
+
+
+func _on_editor_script_changed(_script: Script) -> void:
+	reset_action_data()
+	script_code.gui_input.disconnect(_on_script_code_gui_input)
+	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
+	script_code.gui_input.connect(_on_script_code_gui_input)
+
+
+func _on_script_code_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if hotkey and event.is_pressed() and event.keycode == KEY_ENTER and Input.is_key_pressed(KEY_SHIFT):
 			reset_action_data()
@@ -119,41 +149,8 @@ func _input(event: InputEvent) -> void:
 				for needed_spacing in new_line_count_threshold * 2 - 1:
 					script_code.insert_line_at(caret_line + 1, "")
 				script_code.set_caret_line(caret_line + new_line_count_threshold)
-
-
-func _exit_tree() -> void: # Clean disconnects may not be needed? Similar to missing timer.queue_free()? RefCounted?
-	editor_settings.settings_changed.disconnect(_on_editor_settings_changed)
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Function")
-	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
-	script_code.text_changed.disconnect(_on_script_code_text_changed)
-	action_timer.timeout.disconnect(_on_action_timer_timeout)
-
-
-func _on_action_timer_timeout() -> void:
-	new_line_count = 0
-
-
-func _on_editor_settings_changed() -> void:
-	reset_action_data()
-	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
-	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
-	find_next_function = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Function")
-
-
-func _on_editor_script_changed(_script: Script) -> void:
-	reset_action_data()
-	script_code.text_changed.disconnect(_on_script_code_text_changed)
-	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
-	script_code.text_changed.connect(_on_script_code_text_changed)
-
-
-func _on_script_code_text_changed() -> void:
-	if Input.is_key_pressed(KEY_ENTER):
-		new_line_count += 1
+		elif Input.is_key_pressed(KEY_ENTER):
+			new_line_count += 1
 		if new_line_count == 1:
 			action_timer.start()
 		elif new_line_count == new_line_count_threshold:
