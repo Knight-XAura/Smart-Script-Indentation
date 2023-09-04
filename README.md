@@ -6,23 +6,19 @@ Script which monitors for new lines and determines if certain formatting should 
 - Press enter so many times before a timeout period and the line you are now on clears and adds so many new lines after automatically
 - Customize the timeout period for enter presses
 - Able to detect upcoming (static) functions to change formatting behavior
-- Ability to customize threshold for amount of times pressing enter
+- Ability to customize threshold for amount of new lines above and below cursor
 
 # Upcoming:
-- Ability to customize threshold for detecting upcoming lines with (static) funcunctions to determine changes to formatting for consistency in the middle of your script
 - Ability fo find upcoming (static) functions in classes
-- More consistent formatting with Hot Key
 - Persistence of settings
 - Hot Key at end of Func line customization to create new lines either above or below
-- Ability toallow to insert pass when below function or if next line blank but set for above you can still have pass inserted to the function body
+- Ability to allow to insert pass when below function or if next line blank but set for above you can still have pass inserted to the function body
 
 # How to Configure?
-  You can configure the application (with what's currently supported) by going to Editor > Editor Settings... > Editor Settings > Scripts > Smart Indent and customize the settings
+  You can configure the plugin by going to Editor > Editor Settings... > Editor Settings > Scripts > Smart Indent and customize the settings
 
 ## What customizations are supported?
-  At this time only Action Timeout, Enter Count Threshold, Hot Key, Find Next Func work when customized. 
-  
-  Keep an eye on this list for changes or for this to disappear all together to indicate everything is customizable!
+  All customizations currently work, although some pieces that are supposed to depend on that information is still hard coded, so line spacing results may not be quite as expected in all cases.
 
 # Are any features only partially working?
 
@@ -30,4 +26,4 @@ Yes! Unfortunately thresholds of certain values don't format fully as intended i
 
 # Any major known issues I might run into?
 
-You should use this at your own risk. There is an issue in some cases right now where a line of code may go missing. Undo will bring it back, but just be aware. I know while testing a few times I didn't even notice that missing line til I had an error because of it causing syntax errors.
+You should use this at your own risk. throughout development I've ran into some cases where a line of code may go missing. Undo of course brought it back, but just be aware.
