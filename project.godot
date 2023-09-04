@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Smart Script Indentation"
-run/main_scene="res://test_environment/test_environment.tscn"
+config/name="Smart Scripting"
+run/main_scene="res://smart_scripting_test/smart_scripting_test.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -22,7 +22,7 @@ window/size/viewport_height=480
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/smart_script_indentation/plugin.cfg")
+enabled=PackedStringArray("res://addons/smart_scripting/plugin.cfg")
 
 [rendering]
 
