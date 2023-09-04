@@ -15,6 +15,7 @@ Script which monitors for new lines and determines if certain formatting should 
 - Persistence of settings
 - Hot Key at end of Func line customization to create new lines either above or below
 - Ability to allow to insert pass when below function or if next line blank but set for above you can still have pass inserted to the function body
+- Fix inserting lines at or near end of file
 
 # How to Configure?
   You can configure the plugin by going to Editor > Editor Settings... > Editor Settings > Scripts > Smart Indent and customize the settings
