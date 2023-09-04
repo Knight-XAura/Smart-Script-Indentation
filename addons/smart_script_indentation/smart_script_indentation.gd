@@ -20,7 +20,7 @@ const action_timeout_setting = {
 		"hint_string": "0, 3"
 	}
 const new_line_count_threshold_setting = {
-		"name": "Editor Plugins/Scripts/Smart Indent/Enter Count Threshold",
+		"name": "Editor Plugins/Scripts/Smart Indent/New Line Count Threshold",
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_RANGE,
 		"hint_string": "1,4,1"
@@ -56,6 +56,10 @@ func _init() -> void:
 
 
 func _enter_tree() -> void:
+	pass
+
+
+func _ready() -> void:
 	pass
 
 
