@@ -129,6 +129,7 @@ func _on_script_code_gui_input(event: InputEvent) -> void:
 				script_code.set_line(caret_line, "")
 
 
+
 func _on_action_tiemout_drag_ended(value_changed: bool) -> void:
 	action_timeout = action_tiemout_slider.value
 	action_timer.wait_time = action_timeout
