@@ -23,3 +23,7 @@ Script which monitors for new lines and determines if certain formatting should 
   At this time only Action Timeout, Enter Count Threshold, Hot Key, Find Next Func work when customized. 
   
   Keep an eye on this list for changes or for this to disappear all together to indicate everything is customizable!
+
+# Are any features only partially working?
+
+Yes! Unfortunately thresholds of certain values don't format fully as intended in regards to amount of lines to insert and a fix will be coming in time. Also some values are hard coded into these other dynamic parts of code and so results may not be fully what is expected at this time.
