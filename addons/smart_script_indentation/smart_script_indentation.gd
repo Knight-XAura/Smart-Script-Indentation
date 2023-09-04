@@ -99,7 +99,7 @@ func _input(event: InputEvent) -> void:
 							for line_space in new_line_count_threshold:
 								script_code.insert_line_at(caret_line, "")
 							script_code.set_caret_line(caret_line + 2)
-							reset_temp_data()
+							reset_action_data()
 							return
 						print(lines_to_match)
 						caret_line += 1
@@ -108,7 +108,7 @@ func _input(event: InputEvent) -> void:
 						script_code.set_caret_line(caret_line)
 						for line_space in new_line_count_threshold - 1:
 							script_code.insert_line_at(caret_line, "")
-						reset_temp_data()
+						reset_action_data()
 						return
 			var caret_position = script_code.get_caret_column()
 			var line_length = script_code.get_line(caret_line).length()
@@ -120,7 +120,7 @@ func _input(event: InputEvent) -> void:
 				for needed_spacing in new_line_count_threshold * 2 - 1:
 					script_code.insert_line_at(caret_line + 1, "")
 				script_code.set_caret_line(caret_line + new_line_count_threshold)
-			reset_temp_data()
+			reset_action_data()
 			return
 
 
@@ -140,7 +140,7 @@ func _on_action_timer_timeout() -> void:
 
 
 func _on_editor_settings_changed() -> void:
-	reset_temp_data()
+	reset_action_data()
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
 	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
@@ -151,7 +151,7 @@ func _on_editor_script_changed(_script: Script) -> void:
 	script_code.text_changed.disconnect(_on_script_code_text_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
 	script_code.text_changed.connect(_on_script_code_text_changed)
-	reset_temp_data()
+	reset_action_data()
 
 
 func _on_script_code_text_changed() -> void:
@@ -168,12 +168,12 @@ func _on_script_code_text_changed() -> void:
 							for line_space in new_line_count_threshold - 1:
 								script_code.insert_line_at(caret_line, "")
 							script_code.set_caret_line(caret_line - 1)
-							reset_temp_data()
+							reset_action_data()
 							return
 						for line_space in new_line_count_threshold - lines_to_match:
 							script_code.insert_line_at(caret_line + 1, "")
 						script_code.set_line(caret_line, "")
-						reset_temp_data()
+						reset_action_data()
 						return
 			var caret_position = script_code.get_caret_column()
 			var line_length = script_code.get_line(caret_line).length()
@@ -186,10 +186,10 @@ func _on_script_code_text_changed() -> void:
 				for needed_spacing in new_line_count_threshold - 1:
 					script_code.insert_line_at(caret_line + 1, "")
 				script_code.set_line(caret_line, "")
-			reset_temp_data()
+			reset_action_data()
 			return
 
 
-func reset_temp_data() -> void:
+func reset_action_data() -> void:
 	action_timer.stop()
 	new_line_count = 0
