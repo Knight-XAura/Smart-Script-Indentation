@@ -116,6 +116,7 @@ func _on_editor_script_changed(_script: Script) -> void:
 	script_code.gui_input.connect(_on_script_code_gui_input)
 
 
+
 func _on_script_code_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if hotkey and event.is_pressed() and event.keycode == KEY_ENTER and Input.is_key_pressed(KEY_SHIFT):

@@ -138,6 +138,7 @@ func _on_new_line_count_threshold_value_changed(value: int) -> void:
 	new_line_count_threshold = value
 
 
+
 func _on_hot_key_toggled(button_pressed: bool) -> void:
 	hotkey = button_pressed
 

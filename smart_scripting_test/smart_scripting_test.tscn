@@ -72,6 +72,11 @@ layout_mode = 2
 button_pressed = true
 text = "Find Next Function"
 
+[node name="Control" type="Control" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/FindNextFunction"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="drag_ended" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1/ActionTiemout" to="." method="_on_action_tiemout_drag_ended"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/NewLineCountThreshold" to="." method="_on_new_line_count_threshold_value_changed"]
 [connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/HotKey" to="." method="_on_hot_key_toggled"]
