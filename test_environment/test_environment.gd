@@ -6,6 +6,11 @@ extends Control
 var script_code: CodeEdit
 var action_timer: Timer
 
+@onready var action_tiemout_slider: HSlider = $VBoxContainer/HBoxContainer2/ActionTiemout
+@onready var new_line_count_threshold_spinbox: SpinBox = $VBoxContainer/HBoxContainer/NewLineCountThreshold
+@onready var hot_key_checkbox: CheckBox = $VBoxContainer/HBoxContainer/HotKey
+@onready var find_next_function_checkbox: CheckBox = $VBoxContainer/HBoxContainer/FindNextFunction
+
 
 ### Settings ###
 
@@ -39,7 +44,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	action_timer.wait_time = action_timeout
-	script_code = $CodeEdit as CodeEdit
+	script_code = $VBoxContainer/CodeEdit as CodeEdit
 	script_code.gui_input.connect(_on_script_code_gui_input)
 	set_process(false)
 
@@ -122,3 +127,20 @@ func _on_script_code_gui_input(event: InputEvent) -> void:
 				for needed_spacing in new_line_count_threshold - 1:
 					script_code.insert_line_at(caret_line + 1, "")
 				script_code.set_line(caret_line, "")
+
+
+func _on_action_tiemout_drag_ended(value_changed: bool) -> void:
+	action_timeout = action_tiemout_slider.value
+	action_timer.wait_time = action_timeout
+
+
+func _on_new_line_count_threshold_value_changed(value: float) -> void:
+	new_line_count_threshold = value
+
+
+func _on_hot_key_toggled(button_pressed: bool) -> void:
+	hotkey = button_pressed
+
+
+func _on_find_next_function_toggled(button_pressed: bool) -> void:
+	find_next_function = button_pressed
