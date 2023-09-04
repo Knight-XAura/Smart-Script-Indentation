@@ -90,26 +90,27 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if hotkey and event.is_pressed() and event.keycode == KEY_ENTER and Input.is_key_pressed(KEY_SHIFT):
 			var caret_line: int = script_code.get_caret_line()
-			for lines_to_match in new_line_count_threshold + 1:
-				for syntax in match_syntax:
-					if find_next_function and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
-						if lines_to_match == 0:
-							for line_space in new_line_count_threshold - 1:
-								script_code.insert_line_at(caret_line, "")
+			if find_next_function:
+				for lines_to_match in new_line_count_threshold + 1:
+					for syntax in match_syntax:
+						if script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
+							if lines_to_match == 0:
+								for line_space in new_line_count_threshold - 1:
+									script_code.insert_line_at(caret_line, "")
+								for line_space in new_line_count_threshold:
+									script_code.insert_line_at(caret_line, "")
+								script_code.set_caret_line(caret_line + 2)
+								reset_action_data()
+								return
+							print(lines_to_match)
+							caret_line += 1
 							for line_space in new_line_count_threshold:
 								script_code.insert_line_at(caret_line, "")
-							script_code.set_caret_line(caret_line + 2)
+							script_code.set_caret_line(caret_line)
+							for line_space in new_line_count_threshold - 1:
+								script_code.insert_line_at(caret_line, "")
 							reset_action_data()
 							return
-						print(lines_to_match)
-						caret_line += 1
-						for line_space in new_line_count_threshold:
-							script_code.insert_line_at(caret_line, "")
-						script_code.set_caret_line(caret_line)
-						for line_space in new_line_count_threshold - 1:
-							script_code.insert_line_at(caret_line, "")
-						reset_action_data()
-						return
 			var caret_position = script_code.get_caret_column()
 			var line_length = script_code.get_line(caret_line).length()
 			if caret_position != line_length:
@@ -121,7 +122,6 @@ func _input(event: InputEvent) -> void:
 					script_code.insert_line_at(caret_line + 1, "")
 				script_code.set_caret_line(caret_line + new_line_count_threshold)
 			reset_action_data()
-			return
 
 
 func _exit_tree() -> void:
@@ -161,33 +161,33 @@ func _on_script_code_text_changed() -> void:
 			action_timer.start()
 		elif new_line_count == new_line_count_threshold:
 			var caret_line: int = script_code.get_caret_line()
-			for lines_to_match in new_line_count_threshold + 1:
-				for syntax in match_syntax:
-					if find_next_function and script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
-						if lines_to_match == 0:
-							for line_space in new_line_count_threshold - 1:
-								script_code.insert_line_at(caret_line, "")
-							script_code.set_caret_line(caret_line - 1)
+			if find_next_function:
+				for lines_to_match in new_line_count_threshold + 1:
+					for syntax in match_syntax:
+						if script_code.get_line(caret_line + lines_to_match).begins_with(syntax):
+							if lines_to_match == 0:
+								for line_space in new_line_count_threshold - 1:
+									script_code.insert_line_at(caret_line, "")
+								script_code.set_caret_line(caret_line - 1)
+								reset_action_data()
+								return
+							for line_space in new_line_count_threshold - lines_to_match:
+								script_code.insert_line_at(caret_line + 1, "")
+							script_code.set_line(caret_line, "")
 							reset_action_data()
 							return
-						for line_space in new_line_count_threshold - lines_to_match:
-							script_code.insert_line_at(caret_line + 1, "")
-						script_code.set_line(caret_line, "")
-						reset_action_data()
-						return
-			var caret_position = script_code.get_caret_column()
-			var line_length = script_code.get_line(caret_line).length()
-			if caret_position != line_length:
-				for needed_spacing in new_line_count_threshold - 1:
-					script_code.insert_line_at(caret_line, "")
-				script_code.set_caret_line(caret_line - 1)
-				script_code.set_line(caret_line - 1, "")
-			elif caret_position == line_length:
-				for needed_spacing in new_line_count_threshold - 1:
-					script_code.insert_line_at(caret_line + 1, "")
-				script_code.set_line(caret_line, "")
-			reset_action_data()
-			return
+				var caret_position = script_code.get_caret_column()
+				var line_length = script_code.get_line(caret_line).length()
+				if caret_position != line_length:
+					for needed_spacing in new_line_count_threshold - 1:
+						script_code.insert_line_at(caret_line, "")
+					script_code.set_caret_line(caret_line - 1)
+					script_code.set_line(caret_line - 1, "")
+				elif caret_position == line_length:
+					for needed_spacing in new_line_count_threshold - 1:
+						script_code.insert_line_at(caret_line + 1, "")
+					script_code.set_line(caret_line, "")
+				reset_action_data()
 
 
 func reset_action_data() -> void:
