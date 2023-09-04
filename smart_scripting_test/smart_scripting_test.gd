@@ -18,7 +18,7 @@ var action_timer: Timer
 @export var hotkey: bool = true
 @export var find_next_function: bool = true
 
-@export_range(0.33, 3) var action_timeout: float = 1
+@export_range(0.33, 5) var action_timeout: float = 1
 
 
 ### Variables ###
