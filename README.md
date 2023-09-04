@@ -1,4 +1,4 @@
-# Smart Script Indentation
+# Smart Scripting
 Script which monitors for new lines and determines if certain formatting should happen if requirements are met
 
 # Features:
