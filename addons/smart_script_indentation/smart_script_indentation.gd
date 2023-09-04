@@ -37,12 +37,6 @@ const find_next_func_setting = {
 		"hint": PROPERTY_HINT_NONE,
 		"hint_string": "PROPERTY_USAGE_CHECKABLE"
 	}
-const find_next_func_threshold_setting = {
-		"name": "Editor Plugins/Scripts/Smart Indent/Find Next Func Threshold",
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_RANGE,
-		"hint_string": "1,4,1"
-	}
 var new_line_count_threshold: int
 var hotkey: bool
 var find_next_func: bool
@@ -69,18 +63,16 @@ func _process(delta: float) -> void:
 	editor_interface = get_editor_interface()
 	editor_settings = editor_interface.get_editor_settings()
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout", 1)
-	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Enter Count Threshold", 3)
+	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold", 3)
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey", true) # Default: false
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func", true)
-	editor_settings.set_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func Threshold", 3)
 	editor_settings.add_property_info(action_timeout_setting)
 	editor_settings.add_property_info(new_line_count_threshold_setting)
 	editor_settings.add_property_info(insert_line_spacing_hotkey_setting)
 	editor_settings.add_property_info(find_next_func_setting)
-	editor_settings.add_property_info(find_next_func_threshold_setting)
 	editor_settings.settings_changed.connect(_on_editor_settings_changed)
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Enter Count Threshold")
+	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
 	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
 	script_editor = editor_interface.get_script_editor()
@@ -131,10 +123,9 @@ func _input(event: InputEvent) -> void:
 func _exit_tree() -> void:
 	editor_settings.settings_changed.disconnect(_on_editor_settings_changed)
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Enter Count Threshold")
+	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
 	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func")
-	editor_settings.erase("Editor Plugins/Scripts/Smart Indent/Find Next Func Threshold")
 	script_editor.editor_script_changed.disconnect(_on_editor_script_changed)
 	script_code.text_changed.disconnect(_on_script_code_text_changed)
 	action_timer.timeout.disconnect(_on_action_timer_timeout)
@@ -147,7 +138,7 @@ func _on_action_timer_timeout() -> void:
 func _on_editor_settings_changed() -> void:
 	reset_temp_data()
 	action_timer.wait_time = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Action Timeout")
-	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Enter Count Threshold")
+	new_line_count_threshold = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/New Line Count Threshold")
 	hotkey = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Insert Line Spacing Hotkey")
 	find_next_func = editor_settings.get_setting("Editor Plugins/Scripts/Smart Indent/Find Next Func")
 
