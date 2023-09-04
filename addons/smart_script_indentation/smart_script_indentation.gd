@@ -176,18 +176,18 @@ func _on_script_code_text_changed() -> void:
 							script_code.set_line(caret_line, "")
 							reset_action_data()
 							return
-				var caret_position = script_code.get_caret_column()
-				var line_length = script_code.get_line(caret_line).length()
-				if caret_position != line_length:
-					for needed_spacing in new_line_count_threshold - 1:
-						script_code.insert_line_at(caret_line, "")
-					script_code.set_caret_line(caret_line - 1)
-					script_code.set_line(caret_line - 1, "")
-				elif caret_position == line_length:
-					for needed_spacing in new_line_count_threshold - 1:
-						script_code.insert_line_at(caret_line + 1, "")
-					script_code.set_line(caret_line, "")
-				reset_action_data()
+			var caret_position = script_code.get_caret_column()
+			var line_length = script_code.get_line(caret_line).length()
+			if caret_position != line_length:
+				for needed_spacing in new_line_count_threshold - 1:
+					script_code.insert_line_at(caret_line, "")
+				script_code.set_caret_line(caret_line - 1)
+				script_code.set_line(caret_line - 1, "")
+			elif caret_position == line_length:
+				for needed_spacing in new_line_count_threshold - 1:
+					script_code.insert_line_at(caret_line + 1, "")
+				script_code.set_line(caret_line, "")
+			reset_action_data()
 
 
 func reset_action_data() -> void:
