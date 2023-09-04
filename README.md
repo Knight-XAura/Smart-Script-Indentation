@@ -27,3 +27,7 @@ Script which monitors for new lines and determines if certain formatting should 
 # Are any features only partially working?
 
 Yes! Unfortunately thresholds of certain values don't format fully as intended in regards to amount of lines to insert and a fix will be coming in time. Also some values are hard coded into these other dynamic parts of code and so results may not be fully what is expected at this time.
+
+# Any major known issues I might run into?
+
+You should use this at your own risk. There is an issue in some cases right now where a line of code may go missing. Undo will bring it back, but just be aware. I know while testing a few times I didn't even notice that missing line til I had an error because of it causing syntax errors.
