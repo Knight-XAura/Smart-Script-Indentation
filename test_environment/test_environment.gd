@@ -42,7 +42,7 @@ func _ready() -> void:
 	pass
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	action_timer.wait_time = action_timeout
 	script_code = $VBoxContainer/CodeEdit as CodeEdit
 	script_code.gui_input.connect(_on_script_code_gui_input)
@@ -129,12 +129,12 @@ func _on_script_code_gui_input(event: InputEvent) -> void:
 				script_code.set_line(caret_line, "")
 
 
-func _on_action_tiemout_drag_ended(value_changed: bool) -> void:
+func _on_action_tiemout_drag_ended(_value_changed: bool) -> void:
 	action_timeout = action_tiemout_slider.value
 	action_timer.wait_time = action_timeout
 
 
-func _on_new_line_count_threshold_value_changed(value: float) -> void:
+func _on_new_line_count_threshold_value_changed(value: int) -> void:
 	new_line_count_threshold = value
 
 

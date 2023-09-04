@@ -12,10 +12,9 @@ grow_vertical = 2
 script = ExtResource("1_rkmyr")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 2
+offset_right = 640.0
+offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -23,14 +22,24 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="ATLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+[node name="HBoxContainer1" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ATLabel" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1"]
 layout_mode = 2
 text = "Action Timeout: "
 
-[node name="ActionTiemout" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+[node name="ActionTiemout" type="HSlider" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1"]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 3.0
@@ -38,14 +47,14 @@ value = 1.0
 tick_count = 4
 ticks_on_borders = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="NLCTLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="NLCTLabel" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "New Line Count Threshold: "
 
-[node name="NewLineCountThreshold" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
+[node name="NewLineCountThreshold" type="SpinBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 min_value = 1.0
 max_value = 4.0
@@ -53,17 +62,17 @@ value = 1.0
 rounded = true
 update_on_text_changed = true
 
-[node name="HotKey" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+[node name="HotKey" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 button_pressed = true
 text = "Hotkey"
 
-[node name="FindNextFunction" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+[node name="FindNextFunction" type="CheckBox" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 button_pressed = true
 text = "Find Next Function"
 
-[connection signal="drag_ended" from="VBoxContainer/HBoxContainer2/ActionTiemout" to="." method="_on_action_tiemout_drag_ended"]
-[connection signal="value_changed" from="VBoxContainer/HBoxContainer/NewLineCountThreshold" to="." method="_on_new_line_count_threshold_value_changed"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/HotKey" to="." method="_on_hot_key_toggled"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/FindNextFunction" to="." method="_on_find_next_function_toggled"]
+[connection signal="drag_ended" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer1/ActionTiemout" to="." method="_on_action_tiemout_drag_ended"]
+[connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/NewLineCountThreshold" to="." method="_on_new_line_count_threshold_value_changed"]
+[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/HotKey" to="." method="_on_hot_key_toggled"]
+[connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/FindNextFunction" to="." method="_on_find_next_function_toggled"]
