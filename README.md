@@ -9,6 +9,7 @@ Script which monitors for new lines and determines if certain formatting should 
 - Ability to customize threshold for amount of new lines above and below cursor
 
 # Upcoming:
+- Make hard coded data that shouldn't be hard coded, dynamically coded
 - Ability fo find upcoming (static) functions in classes
 - Persistence of settings
 - Hot Key at end of Func line customization to create new lines either above or below
