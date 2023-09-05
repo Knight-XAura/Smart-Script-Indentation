@@ -17,7 +17,7 @@ Script which monitors for new lines and determines if certain formatting should 
 - Fix inserting lines at or near end of file
 
 ## How to Configure?
-  You can configure the plugin by going to Editor > Editor Settings... > Editor Settings > Scripts > Smart Indent and customize the settings
+  You can configure the plugin by going to Editor > Editor Settings... > Editor Plugins > Scripts > Smart Indent and customize the settings
 
 ### What customizations are supported?
   All customizations currently work, although some pieces that are supposed to depend on that information is still hard coded, so line spacing results may not be quite as expected in all cases.
