@@ -16,11 +16,16 @@ Script which monitors for new lines and determines if certain formatting should 
 - Ability to allow to insert pass when below function or if next line blank but set for above you can still have pass inserted to the function body
 - Fix inserting lines at or near end of file
 
+## Development Pace and Priorities:
+
+I wanted to take a moment and note that I know this don't seem like much now, but I have so much planned on my head that I'd like to put on the Upcoming section, but I need to work out the kinks with spacing and then I have a bunch of features in mind that can rapidly be implemented. So my current priority is finishing up the most basic thing this script does and that is spacing. I have more customization options for this I'd think I'll be implementing so you can choose behavior as well. I hope you'll stick around to see and provide feedback on the great things we can accomplish! :)
+
 ## How to Configure?
-  You can configure the plugin by going to Editor > Editor Settings... > Editor Plugins > Scripts > Smart Indent and customize the settings
+
+You can configure the plugin by going to Editor > Editor Settings... > Editor Plugins > Scripts > Smart Indent and customize the settings
 
 ### What customizations are supported?
-  All customizations currently work, although some pieces that are supposed to depend on that information is still hard coded, so line spacing results may not be quite as expected in all cases.
+All customizations currently work, although some pieces that are supposed to depend on that information is still hard coded, so line spacing results may not be quite as expected in all cases.
 
 ## Are any features only partially working?
 
