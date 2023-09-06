@@ -56,14 +56,6 @@ func _init() -> void:
 
 
 func _enter_tree() -> void:
-	pass
-
-
-func _ready() -> void:
-	pass
-
-
-func _process(delta: float) -> void:
 	editor_interface = get_editor_interface()
 	editor_settings = editor_interface.get_editor_settings()
 	editor_settings.set_setting("Editor Plugins/Scripts/Smart Scripting/Action Timeout", 1)
@@ -83,7 +75,10 @@ func _process(delta: float) -> void:
 	script_editor.editor_script_changed.connect(_on_editor_script_changed)
 	script_code = script_editor.get_current_editor().get_base_editor() as CodeEdit
 	script_code.gui_input.connect(_on_script_code_gui_input)
-	set_process(false)
+
+
+func _ready() -> void:
+	pass
 
 
 func _exit_tree() -> void: # Clean disconnects may not be needed? Similar to missing timer.queue_free()? RefCounted?

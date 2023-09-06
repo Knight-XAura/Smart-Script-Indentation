@@ -39,14 +39,9 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	pass
-
-
-func _process(_delta: float) -> void:
 	action_timer.wait_time = action_timeout
 	script_code = $VBoxContainer/CodeEdit as CodeEdit
 	script_code.gui_input.connect(_on_script_code_gui_input)
-	set_process(false)
 
 
 func _exit_tree() -> void: # Clean disconnects may not be needed? Similar to missing timer.queue_free()? RefCounted?
